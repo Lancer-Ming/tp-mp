@@ -6,7 +6,7 @@
  * Time: 23:09
  */
 
-namespace app\api\controller\v1;
+namespace app\api\controller\v2;
 
 
 use app\api\model\Banner as BannerModel;

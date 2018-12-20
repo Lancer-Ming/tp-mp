@@ -89,11 +89,11 @@ return [
     // 是否开启路由
     'url_route_on'           => true,
     // 路由使用完整匹配
-    'route_complete_match'   => false,
+    'route_complete_match'   => true,
     // 路由配置文件（支持配置多个）
     'route_config_file'      => ['route'],
     // 是否强制使用路由
-    'url_route_must'         => false,
+    'url_route_must'         => true,
     // 域名部署
     'url_domain_deploy'      => false,
     // 域名根，如thinkphp.cn
@@ -156,7 +156,7 @@ return [
     // 显示错误信息
     'show_error_msg'         => false,
     // 异常处理handle类 留空使用 \think\exception\Handle
-    'exception_handle'       => '',
+    'exception_handle'       => 'app\lib\exception\ExceptionHandle',
 
     // +----------------------------------------------------------------------
     // | 日志设置
@@ -164,11 +164,12 @@ return [
 
     'log'                    => [
         // 日志记录方式，内置 file socket 支持扩展
-        'type'  => 'File',
+        // 关闭自动记录日志，请将type设置为test
+        'type'  => 'test',
         // 日志保存目录
-        'path'  => LOG_PATH,
+        'path'  => __DIR__.'/../log/',
         // 日志记录级别
-        'level' => [],
+        'level' => ['sql'],
     ],
 
     // +----------------------------------------------------------------------

@@ -13,6 +13,6 @@ use think\Validate;
 class testValidate extends Validate
 {
     protected $rule = [
-        'id' => 'require|min:6'
+        'id' => 'require|max:6'
     ];
 }
