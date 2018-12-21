@@ -2,6 +2,7 @@
 
 namespace app\api\model;
 
+use think\Collection;
 use think\Model;
 
 class Theme extends Model
@@ -17,18 +18,25 @@ class Theme extends Model
         return $this->belongsTo('Image', 'head_img_id', 'id');
     }
 
-    /** 获取简单的列表
-     * @return false|\PDOStatement|string|\think\Collection
-     */
-    public static function getsimpleList()
+    public function product()
     {
-        $ids = request()->param('ids');
+        return $this->belongsToMany('Product', 'theme_product', 'product_id', 'theme_id');
+    }
+
+
+    /** 获取简单的列表
+     * @param $ids
+     * @return false|\PDOStatement|string|Collection
+     */
+    public static function getsimpleList($ids)
+    {
         return self::with('topicImg,headImg')->select($ids);
     }
 
-    public static function getComplexList()
+    public static function getComplexOne($id)
     {
-
+        $themes = self::with('product')->where('id', $id)->select();
+        return $themes;
     }
 
 }

@@ -24,7 +24,7 @@ class Banner extends Controller
         $id = $request->param('id');
         $banners = BannerModel::getBannerById($id);
 
-        if (!$banners) {
+        if ($banners->isEmpty()) {
             throw new BannerMissException();
         }
         return json($banners);
