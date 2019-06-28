@@ -9,22 +9,28 @@
 namespace app\api\validate;
 
 
+use app\lib\Error;
 use app\lib\exception\ParameterException;
 use think\Request;
 use think\Validate;
 
 class BaseValidate extends Validate
 {
+    /**
+     * @return bool
+     * @throws ParameterException
+     */
     public function goCheck()
     {
         // 获取 http 传入参数
         $request = Request::instance(); // 获取实例
         $params = $request->param();
-   
-        $result = $this->batch()->check($params);
+
+        $result = $this->check($params);
         if (!$result) {
             throw new ParameterException([
-                'msg' => $this->error
+                'msg' => Error::getMsg($this->error),
+                'errorCode' => $this->error
             ]);
         } else {
             return true;
@@ -45,5 +51,28 @@ class BaseValidate extends Validate
         } else {
             return false;
         }
+    }
+
+    protected function isNotEmpty($value, $rule='', $data='', $field='')
+    {
+        if (empty($value)) {
+            return $field . '不允许为空';
+        } else {
+            return true;
+        }
+    }
+
+    public function getDataByRule($arrays)
+    {
+        if(array_key_exists('user_id', $arrays) || array_key_exists('uid', $arrays)) {
+            throw new ParameterException([
+                'msg' => '参数中包含有非法的参数名user_id或者uid'
+            ]);
+        }
+        $newArr = [];
+        foreach ($this->rule as $key => $rule) {
+            $newArr[$key] = $arrays[$key];
+        }
+        return $newArr;
     }
 }

@@ -11,6 +11,7 @@ namespace app\lib\exception;
 
 
 
+use app\lib\Error;
 use Exception;
 
 class BaseException extends Exception
@@ -33,7 +34,9 @@ class BaseException extends Exception
     public function __construct($params=[])
     {
         if ( ! is_array($params)) {
-            return ;
+            $this->errorCode = $params;
+            $this->msg = Error::getMsg($params);
+            return;
         }
         // 如果传了 code
         if (array_key_exists('code', $params)) {

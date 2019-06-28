@@ -10,6 +10,7 @@ namespace app\lib\exception;
 
 use Exception;
 use think\exception\Handle;
+use think\Log;
 use think\Request;
 
 class ExceptionHandle extends Handle
@@ -63,6 +64,7 @@ class ExceptionHandle extends Handle
             'errorCode' => $this->errorCode,
             'request_url' => $request->url()
         ];
+
         return json($result, $this->code);
     }
 

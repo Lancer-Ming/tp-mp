@@ -26,5 +26,4 @@ class BaseModel extends Model
         }
         return $finalUrl;
     }
-
 }
